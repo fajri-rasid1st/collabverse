@@ -1,0 +1,14 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+
+formatter:
+  trailing_commas: preserve
+  page_width: 120
+
+analyzer:
+  plugins:
+
+custom_lint:
+  rules:
