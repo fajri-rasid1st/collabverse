@@ -64,5 +64,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'collab-verse-692fa.firebasestorage.app',
     iosBundleId: 'com.example.collabverse',
   );
-
 }
