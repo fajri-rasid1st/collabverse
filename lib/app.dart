@@ -7,6 +7,7 @@ class CollabVerseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'CollabVerse',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
