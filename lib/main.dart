@@ -22,5 +22,5 @@ void main() async {
 
   FlutterNativeSplash.remove();
 
-  runApp(const CollabVerseApp());
+  runApp( CollabVerseApp());
 }
