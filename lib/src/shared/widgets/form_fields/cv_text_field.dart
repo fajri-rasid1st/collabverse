@@ -10,11 +10,13 @@ import 'package:collabverse/core/extensions/text_style_extension.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/src/shared/widgets/svg_asset.dart';
 
-class CvTextField extends StatefulWidget {
-  final bool enabled;
-  final bool readOnly;
+class CvTextField extends StatelessWidget {
   final String name;
   final String label;
+  final bool enabled;
+  final bool readOnly;
+  final bool showMaskRequiredLabel;
+  final bool obsecureText;
   final String? initialValue;
   final String? hintText;
   final int maxLines;
@@ -32,10 +34,12 @@ class CvTextField extends StatefulWidget {
 
   const CvTextField({
     super.key,
-    this.enabled = true,
-    this.readOnly = false,
     required this.name,
     required this.label,
+    this.enabled = true,
+    this.readOnly = false,
+    this.showMaskRequiredLabel = false,
+    this.obsecureText = false,
     this.initialValue,
     this.hintText,
     this.maxLines = 1,
@@ -53,90 +57,77 @@ class CvTextField extends StatefulWidget {
   });
 
   @override
-  State<CvTextField> createState() => _CvTextFieldState();
-}
-
-class _CvTextFieldState extends State<CvTextField> {
-  late final ValueNotifier<bool> isFocus;
-
-  @override
-  void initState() {
-    super.initState();
-
-    isFocus = ValueNotifier(false);
-  }
-
-  @override
-  void dispose() {
-    isFocus.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 4,
+      spacing: 6,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: TextTheme.of(context).labelMedium!.semiBold,
-        ),
-        Focus(
-          onFocusChange: (value) => isFocus.value = value,
-          child: FormBuilderTextField(
-            enabled: widget.enabled,
-            readOnly: widget.readOnly,
-            name: widget.name,
-            initialValue: widget.initialValue,
-            maxLines: widget.maxLines,
-            keyboardType: widget.textInputType,
-            textInputAction: widget.textInputAction,
-            textCapitalization: widget.textCapitalization,
-            textAlignVertical: TextAlignVertical.center,
-            obscureText: widget.textInputType == TextInputType.visiblePassword,
-            style: TextTheme.of(context).bodyMedium!.colorOnSurface(context),
-            decoration: InputDecoration(
-              hintText: widget.hintText,
-              hintMaxLines: widget.maxLines,
-              hintStyle: TextTheme.of(context).bodyMedium!.colorOutlineVariant(context),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 16,
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: label,
+                style: TextTheme.of(context).labelMedium!.bold,
               ),
-              prefixIcon: widget.prefixIconName != null
-                  ? Padding(
-                      padding: EdgeInsets.fromLTRB(16, 0, 10, 0),
+              if (showMaskRequiredLabel)
+                TextSpan(
+                  text: '*',
+                  style: TextTheme.of(context).labelMedium!.bold.colorError(context),
+                ),
+            ],
+          ),
+        ),
+        FormBuilderTextField(
+          enabled: enabled,
+          readOnly: readOnly,
+          name: name,
+          initialValue: initialValue,
+          maxLines: maxLines,
+          keyboardType: textInputType,
+          textInputAction: textInputAction,
+          textCapitalization: textCapitalization,
+          textAlignVertical: TextAlignVertical.center,
+          obscureText: obsecureText,
+          style: TextTheme.of(context).bodyMedium!.colorOnSurface(context),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintMaxLines: maxLines,
+            hintStyle: TextTheme.of(context).bodyMedium!.colorOutlineVariant(context),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 16,
+            ),
+            prefixIcon: prefixIconName != null
+                ? Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 10, 0),
+                    child: SvgAsset(
+                      AssetPath.getIcon(prefixIconName!),
+                      color: ColorScheme.of(context).onSurface,
+                      width: 20,
+                    ),
+                  )
+                : null,
+            prefixText: prefixText,
+            prefixStyle: TextTheme.of(context).bodyMedium!.bold.colorOnSurface(context),
+            suffixIcon: suffixIconName != null
+                ? Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 16, 0),
+                    child: GestureDetector(
+                      onTap: onSuffixIconTap,
                       child: SvgAsset(
-                        AssetPath.getIcon(widget.prefixIconName!),
+                        AssetPath.getIcon(suffixIconName!),
                         color: ColorScheme.of(context).onSurface,
                         width: 20,
                       ),
-                    )
-                  : null,
-              prefixText: widget.prefixText,
-              prefixStyle: TextTheme.of(context).bodyMedium!.semiBold.colorOnSurface(context),
-              suffixIcon: widget.suffixIconName != null
-                  ? Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 16, 0),
-                      child: GestureDetector(
-                        onTap: widget.onSuffixIconTap,
-                        child: SvgAsset(
-                          AssetPath.getIcon(widget.suffixIconName!),
-                          color: ColorScheme.of(context).onSurface,
-                          width: 20,
-                        ),
-                      ),
-                    )
-                  : null,
-              suffixText: widget.suffixText,
-              suffixStyle: TextTheme.of(context).bodyMedium!.semiBold.colorOnSurface(context),
-            ),
-            validator: widget.validators != null ? FormBuilderValidators.compose(widget.validators!) : null,
-            onTap: widget.onTap,
-            onChanged: widget.onChanged,
+                    ),
+                  )
+                : null,
+            suffixText: suffixText,
+            suffixStyle: TextTheme.of(context).bodyMedium!.bold.colorOnSurface(context),
           ),
+          validator: validators != null ? FormBuilderValidators.compose(validators!) : null,
+          onTap: onTap,
+          onChanged: onChanged,
         ),
       ],
     );

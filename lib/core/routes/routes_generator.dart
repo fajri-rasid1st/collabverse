@@ -1,9 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:provider/provider.dart';
+
 // Project imports:
 import 'package:collabverse/core/routes/route_names.dart';
-import 'package:collabverse/src/ui/auth/pages/login_page.dart';
+import 'package:collabverse/src/ui/auth/login/login_controller.dart';
+import 'package:collabverse/src/ui/auth/login/login_page.dart';
 import 'package:collabverse/src/ui/discover/pages/discover_page.dart';
 
 /// Routes generator
@@ -16,7 +20,10 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
       );
     case Routes.login:
       return MaterialPageRoute(
-        builder: (context) => LoginPage(),
+        builder: (_) => ChangeNotifierProvider(
+          create: (_) => LoginController(),
+          child: LoginPage(),
+        ),
       );
     default:
       return null;
