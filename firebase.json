@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "collab-verse-692fa",
+          "appId": "1:973801495398:android:94f12e65ec0600652846a7",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "collab-verse-692fa",
+          "configurations": {
+            "android": "1:973801495398:android:94f12e65ec0600652846a7",
+            "ios": "1:973801495398:ios:717d0d3455d386cb2846a7"
+          }
+        }
+      }
+    }
+  }
+}

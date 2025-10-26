@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973801495398",
+    "project_id": "collab-verse-692fa",
+    "storage_bucket": "collab-verse-692fa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973801495398:android:94f12e65ec0600652846a7",
+        "android_client_info": {
+          "package_name": "com.example.collabverse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzWYpMYDLnWUYyUrPJHEdUDZil9Lhnqe8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
