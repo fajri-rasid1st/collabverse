@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:collabverse/core/routes/route_names.dart';
 import 'package:collabverse/src/ui/auth/login/login_controller.dart';
 import 'package:collabverse/src/ui/auth/login/login_page.dart';
+import 'package:collabverse/src/ui/auth/register/register_controller.dart';
+import 'package:collabverse/src/ui/auth/register/register_page.dart';
 import 'package:collabverse/src/ui/discover/pages/discover_page.dart';
 
 /// Routes generator
@@ -23,6 +25,13 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
         builder: (_) => ChangeNotifierProvider(
           create: (_) => LoginController(),
           child: LoginPage(),
+        ),
+      );
+    case Routes.register:
+      return MaterialPageRoute(
+        builder: (_) => ChangeNotifierProvider(
+          create: (_) => RegisterController(),
+          child: RegisterPage(),
         ),
       );
     default:

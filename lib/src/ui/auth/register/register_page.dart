@@ -9,22 +9,20 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:collabverse/core/extensions/button_extension.dart';
 import 'package:collabverse/core/extensions/text_style_extension.dart';
-import 'package:collabverse/core/routes/route_names.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/form_fields/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
-import 'package:collabverse/src/shared/widgets/svg_asset.dart';
-import 'package:collabverse/src/ui/auth/login/login_controller.dart';
+import 'package:collabverse/src/ui/auth/register/register_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Login controller
-    final controller = context.read<LoginController>();
+    // Register controller
+    final controller = context.read<RegisterController>();
 
     return ScaffoldSafeArea(
       body: FormBuilder(
@@ -39,7 +37,7 @@ class LoginPage extends StatelessWidget {
                   ClipPath(
                     clipper: AuthPageClipper(),
                     child: Container(
-                      height: 230,
+                      height: 200,
                       width: double.infinity,
                       color: ColorScheme.of(context).primaryContainer,
                     ),
@@ -84,15 +82,35 @@ class LoginPage extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Login dahulu sebelum lanjut',
+                        'Buat akun, lalu mulai eksplorasi.',
                         style: TextTheme.of(context).titleLarge!.bold.colorPrimary(context),
                       ),
                     ),
                     SizedBox(height: 16),
                     CvTextField(
+                      name: 'fullName',
+                      label: 'Nama Lengkap',
+                      hintText: 'John Doe',
+                      showMaskRequiredLabel: true,
+                      textInputType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
+                      textInputAction: TextInputAction.next,
+                      validators: [
+                        FormBuilderValidators.required(
+                          errorText: 'Nama lengkap wajib diisi',
+                        ),
+                        FormBuilderValidators.match(
+                          RegExp(r'^(?=.{3,}$)[A-Za-zÀ-ÿ\s]+$'),
+                          errorText: 'Nama lengkap tidak valid',
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    CvTextField(
                       name: 'email',
                       label: 'Email',
-                      hintText: 'Email kamu',
+                      hintText: 'johndoe123@gmail.com',
+                      showMaskRequiredLabel: true,
                       textInputType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validators: [
@@ -105,75 +123,79 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16),
+                    SizedBox(height: 16),
                     ValueListenableBuilder(
                       valueListenable: controller.obsecurePassword,
                       builder: (context, obsecured, child) {
                         return CvTextField(
                           name: 'password',
                           label: 'Password',
-                          hintText: 'Password kamu',
+                          hintText: 'Masukkan password',
                           obsecureText: obsecured,
                           suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
                           onSuffixIconTap: () => controller.obsecurePassword.value = !obsecured,
+                          onChanged: (value) => controller.currentPassword.value = value ?? '',
                           textInputType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                           validators: [
                             FormBuilderValidators.required(
                               errorText: 'Password wajib diisi',
+                            ),
+                            FormBuilderValidators.minLength(
+                              8,
+                              errorText: 'Password minimal 8 karakter',
                             ),
                           ],
                         );
                       },
                     ),
+                    SizedBox(height: 16),
+                    ValueListenableBuilder(
+                      valueListenable: controller.obsecureConfirmPassword,
+                      builder: (context, obsecured, child) {
+                        return ValueListenableBuilder(
+                          valueListenable: controller.currentPassword,
+                          builder: (context, currentPassword, child) {
+                            return CvTextField(
+                              name: 'confirmPassword',
+                              label: 'Konfirmasi Password',
+                              hintText: 'Ulangi password di atas',
+                              obsecureText: obsecured,
+                              suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
+                              onSuffixIconTap: () => controller.obsecureConfirmPassword.value = !obsecured,
+                              textInputType: TextInputType.visiblePassword,
+                              textInputAction: TextInputAction.done,
+                              validators: [
+                                FormBuilderValidators.required(
+                                  errorText: 'Konfirmasi password wajib diisi',
+                                ),
+                                FormBuilderValidators.equal(
+                                  currentPassword,
+                                  errorText: 'Konfirmasi password tidak sesuai',
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                     SizedBox(height: 20),
                     FilledButton(
-                      onPressed: () => controller.login(),
-                      child: Text('Masuk'),
-                    ).expand(),
-                    SizedBox(height: 24),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                      child: Row(
-                        spacing: 8,
-                        children: [
-                          Expanded(
-                            child: Divider(),
-                          ),
-                          Text(
-                            'atau',
-                            style: TextTheme.of(context).bodySmall!.colorOutline(context),
-                          ),
-                          Expanded(
-                            child: Divider(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24),
-                    OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: SvgAsset(
-                        AssetPath.getIcon('ph_google.svg'),
-                      ),
-                      label: Text('Lanjutkan dengan Google'),
+                      onPressed: () => controller.register(),
+                      child: Text('Daftar'),
                     ).expand(),
                     SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Belum punya akun Collabs?\t',
+                          'Sudah punya akun Collabs?\t',
                           style: TextTheme.of(context).bodyMedium!.colorOutline(context),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            // Unfocus any text field
-                            FocusManager.instance.primaryFocus?.unfocus();
-
-                            navigatorKey.currentState!.pushNamed(Routes.register);
-                          },
+                          onTap: () => navigatorKey.currentState!.pop(),
                           child: Text(
-                            'Daftar di sini',
+                            'Masuk di sini',
                             style: TextTheme.of(context).bodyMedium!.bold.colorPrimary(context),
                           ),
                         ),
