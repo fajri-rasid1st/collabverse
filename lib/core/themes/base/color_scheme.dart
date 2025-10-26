@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 final colorScheme = ColorScheme.fromSeed(
-  seedColor: Palette.primaryColor,
-  primary: Palette.primaryColor,
+  seedColor: Palette.primary,
+  primary: Palette.primary,
   onPrimary: Palette.onPrimary,
   primaryContainer: Palette.primaryContainer,
   onPrimaryContainer: Palette.onPrimaryContainer,
@@ -28,7 +28,7 @@ final colorScheme = ColorScheme.fromSeed(
 
 class Palette {
   // Core / Primary
-  static const primaryColor = Color(0xFF482477);
+  static const primary = Color(0xFF482477);
   static const onPrimary = Color(0xFFFFFFFF);
   static const primaryContainer = Color(0xFFE9DDFF);
   static const onPrimaryContainer = Color(0xFF23123D);

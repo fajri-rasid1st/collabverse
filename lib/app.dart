@@ -19,7 +19,7 @@ class CollabVerseApp extends StatelessWidget {
       darkTheme: appTheme,
       navigatorKey: navigatorKey,
       onGenerateRoute: generateAppRoutes,
-      initialRoute: Routes.discover,
+      initialRoute: Routes.login,
     );
   }
 }
