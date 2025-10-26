@@ -6,12 +6,12 @@ class AuthPageClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final path = Path();
 
-    path.lineTo(0, size.height - 85);
+    path.lineTo(0, size.height - 80);
     path.quadraticBezierTo(
       size.width / 2,
       size.height,
       size.width,
-      size.height - 85,
+      size.height - 80,
     );
 
     path.lineTo(size.width, 0);

@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     // Login controller
     final controller = context.read<LoginController>();
 
@@ -105,16 +105,17 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16),
-                    ValueListenableBuilder(
-                      valueListenable: controller.obsecurePassword,
-                      builder: (context, obsecured, child) {
+                    Consumer<LoginController>(
+                      builder: (context, controller, child) {
+                        final obsecured = controller.obsecurePassword;
+
                         return CvTextField(
                           name: 'password',
                           label: 'Password',
                           hintText: 'Password kamu',
                           obsecureText: obsecured,
                           suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
-                          onSuffixIconTap: () => controller.obsecurePassword.value = !obsecured,
+                          onSuffixIconTap: () => controller.obsecurePassword = !obsecured,
                           textInputType: TextInputType.visiblePassword,
                           textInputAction: TextInputAction.done,
                           validators: [
@@ -125,6 +126,7 @@ class LoginPage extends StatelessWidget {
                         );
                       },
                     ),
+
                     SizedBox(height: 20),
                     FilledButton(
                       onPressed: () => controller.login(),

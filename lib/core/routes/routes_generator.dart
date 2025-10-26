@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:collabverse/core/routes/route_names.dart';
+import 'package:collabverse/src/ui/auth/complete_profile.dart/complete_profile_controller.dart';
+import 'package:collabverse/src/ui/auth/complete_profile.dart/complete_profile_page.dart';
 import 'package:collabverse/src/ui/auth/login/login_controller.dart';
 import 'package:collabverse/src/ui/auth/login/login_page.dart';
 import 'package:collabverse/src/ui/auth/register/register_controller.dart';
@@ -32,6 +34,13 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
         builder: (_) => ChangeNotifierProvider(
           create: (_) => RegisterController(),
           child: RegisterPage(),
+        ),
+      );
+    case Routes.completeProfile:
+      return MaterialPageRoute(
+        builder: (_) => ChangeNotifierProvider(
+          create: (_) => CompleteProfileController(),
+          child: CompleteProfilePage(),
         ),
       );
     default:

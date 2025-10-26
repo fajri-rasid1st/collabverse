@@ -27,4 +27,12 @@ class Utils {
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
+
+  static String convertCountryCodeToEmoji(String countryCode) {
+    final base = 0x1F1E6;
+    final firstChar = countryCode.codeUnitAt(0) - 'A'.codeUnitAt(0) + base;
+    final secondChar = countryCode.codeUnitAt(1) - 'A'.codeUnitAt(0) + base;
+
+    return String.fromCharCode(firstChar) + String.fromCharCode(secondChar);
+  }
 }

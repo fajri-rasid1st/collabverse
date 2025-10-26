@@ -2,7 +2,7 @@
 enum RoleType {
   creator(
     value: 'creator',
-    display: 'Creator',
+    display: 'Kreator',
   ),
   organizer(
     value: 'organizer',

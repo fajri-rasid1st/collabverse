@@ -11,6 +11,7 @@ import 'package:collabverse/core/extensions/button_extension.dart';
 import 'package:collabverse/core/extensions/text_style_extension.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
+import 'package:collabverse/core/utils/utils.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/form_fields/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
@@ -90,8 +91,8 @@ class RegisterPage extends StatelessWidget {
                     CvTextField(
                       name: 'fullName',
                       label: 'Nama Lengkap',
-                      hintText: 'John Doe',
                       showMaskRequiredLabel: true,
+                      hintText: 'John Doe',
                       textInputType: TextInputType.name,
                       textCapitalization: TextCapitalization.words,
                       textInputAction: TextInputAction.next,
@@ -109,8 +110,8 @@ class RegisterPage extends StatelessWidget {
                     CvTextField(
                       name: 'email',
                       label: 'Email',
-                      hintText: 'johndoe123@gmail.com',
                       showMaskRequiredLabel: true,
+                      hintText: 'johndoe123@gmail.com',
                       textInputType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validators: [
@@ -123,18 +124,57 @@ class RegisterPage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: CvTextField(
+                            name: '',
+                            label: 'Nomor HP',
+                            showMaskRequiredLabel: true,
+                            initialValue: '${Utils.convertCountryCodeToEmoji('ID')}\t+62',
+                            enabled: false,
+                            readOnly: true,
+                            textStyle: TextTheme.of(context).bodyMedium!.bold.colorOnSurface(context),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          flex: 9,
+                          child: CvTextField(
+                            name: 'phoneNumber',
+                            label: '',
+                            hintText: 'xxx-xxxx-xxxx',
+                            textInputType: TextInputType.numberWithOptions(),
+                            textInputAction: TextInputAction.next,
+                            validators: [
+                              FormBuilderValidators.required(
+                                errorText: 'Nomor HP wajib diisi',
+                              ),
+                              FormBuilderValidators.match(
+                                RegExp(r'^[0-9]{9,13}$'),
+                                errorText: 'Nomor HP tidak valid',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 16),
-                    ValueListenableBuilder(
-                      valueListenable: controller.obsecurePassword,
-                      builder: (context, obsecured, child) {
+                    Consumer<RegisterController>(
+                      builder: (context, controller, child) {
+                        final obsecured = controller.obsecurePassword;
+
                         return CvTextField(
                           name: 'password',
                           label: 'Password',
+                          showMaskRequiredLabel: true,
                           hintText: 'Masukkan password',
                           obsecureText: obsecured,
                           suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
-                          onSuffixIconTap: () => controller.obsecurePassword.value = !obsecured,
-                          onChanged: (value) => controller.currentPassword.value = value ?? '',
+                          onSuffixIconTap: () => controller.obsecurePassword = !obsecured,
+                          onChanged: (value) => controller.currentPassword = value ?? '',
                           textInputType: TextInputType.visiblePassword,
                           textInputAction: TextInputAction.next,
                           validators: [
@@ -150,32 +190,30 @@ class RegisterPage extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 16),
-                    ValueListenableBuilder(
-                      valueListenable: controller.obsecureConfirmPassword,
-                      builder: (context, obsecured, child) {
-                        return ValueListenableBuilder(
-                          valueListenable: controller.currentPassword,
-                          builder: (context, currentPassword, child) {
-                            return CvTextField(
-                              name: 'confirmPassword',
-                              label: 'Konfirmasi Password',
-                              hintText: 'Ulangi password di atas',
-                              obsecureText: obsecured,
-                              suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
-                              onSuffixIconTap: () => controller.obsecureConfirmPassword.value = !obsecured,
-                              textInputType: TextInputType.visiblePassword,
-                              textInputAction: TextInputAction.done,
-                              validators: [
-                                FormBuilderValidators.required(
-                                  errorText: 'Konfirmasi password wajib diisi',
-                                ),
-                                FormBuilderValidators.equal(
-                                  currentPassword,
-                                  errorText: 'Konfirmasi password tidak sesuai',
-                                ),
-                              ],
-                            );
-                          },
+                    Consumer<RegisterController>(
+                      builder: (context, controller, child) {
+                        final obsecured = controller.obsecureConfirmPassword;
+                        final currentPassword = controller.currentPassword;
+
+                        return CvTextField(
+                          name: 'confirmPassword',
+                          label: 'Konfirmasi Password',
+                          showMaskRequiredLabel: true,
+                          hintText: 'Ulangi password di atas',
+                          obsecureText: obsecured,
+                          suffixIconName: obsecured ? 'ph_eye_closed.svg' : 'ph_eye.svg',
+                          onSuffixIconTap: () => controller.obsecureConfirmPassword = !obsecured,
+                          textInputType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                          validators: [
+                            FormBuilderValidators.required(
+                              errorText: 'Konfirmasi password wajib diisi',
+                            ),
+                            FormBuilderValidators.equal(
+                              currentPassword,
+                              errorText: 'Konfirmasi password tidak sesuai',
+                            ),
+                          ],
                         );
                       },
                     ),
