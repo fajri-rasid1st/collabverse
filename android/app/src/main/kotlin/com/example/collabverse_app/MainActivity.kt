@@ -1,4 +1,4 @@
-package com.example.collabverse
+package com.example.collabverse_app
 
 import io.flutter.embedding.android.FlutterActivity
 
