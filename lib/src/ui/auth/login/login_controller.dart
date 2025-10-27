@@ -25,12 +25,10 @@ class LoginController extends ChangeNotifier {
   /// Login
   Future<void> login() async {
     // Validate and save the form values
-    formKey.currentState?.saveAndValidate(
-      autoScrollWhenFocusOnInvalid: true,
-    );
+    if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+      debugPrint(formKey.currentState!.value.toString());
 
-    debugPrint(formKey.currentState?.value.toString());
-
-    navigatorKey.currentState!.pushNamed(Routes.completeProfile);
+      navigatorKey.currentState!.pushNamed(Routes.completeProfile);
+    }
   }
 }

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:collabverse/core/routes/route_names.dart';
+import 'package:collabverse/src/shared/pages/single_selection_value_page.dart';
 import 'package:collabverse/src/ui/auth/complete_profile.dart/complete_profile_controller.dart';
 import 'package:collabverse/src/ui/auth/complete_profile.dart/complete_profile_page.dart';
 import 'package:collabverse/src/ui/auth/login/login_controller.dart';
@@ -18,7 +19,6 @@ import 'package:collabverse/src/ui/discover/pages/discover_page.dart';
 Route<dynamic>? generateAppRoutes(RouteSettings settings) {
   switch (settings.name) {
     case Routes.discover:
-      // final args = settings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
         builder: (context) => DiscoverPage(),
       );
@@ -41,6 +41,17 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
         builder: (_) => ChangeNotifierProvider(
           create: (_) => CompleteProfileController(),
           child: CompleteProfilePage(),
+        ),
+      );
+    case Routes.singleSelectionValue:
+      final args = settings.arguments as Map<String, dynamic>;
+
+      return MaterialPageRoute(
+        builder: (_) => SingleSelectionValuePage(
+          appBarTitle: args['appBarTitle'],
+          // labels: args['labels'],
+          // values: args['values'],
+          // initialValue: args['initialValue'],
         ),
       );
     default:

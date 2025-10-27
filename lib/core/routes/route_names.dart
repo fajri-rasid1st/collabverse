@@ -4,4 +4,6 @@ class Routes {
   static const login = '/login';
   static const register = '/register';
   static const completeProfile = '/complete-profile';
+  static const singleSelectionValue = '/single-selection-value';
+  static const multipleSelectionValues = '/multiple-selection-values';
 }

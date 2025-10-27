@@ -48,7 +48,7 @@ final textButtonTheme = TextButtonThemeData(
 final iconButtonTheme = IconButtonThemeData(
   style: IconButton.styleFrom(
     foregroundColor: Palette.primary,
-    backgroundColor: Palette.primaryContainer,
+    backgroundColor: Colors.transparent,
     disabledForegroundColor: Palette.outlineVariant,
     disabledBackgroundColor: Palette.disabled,
     shape: RoundedRectangleBorder(

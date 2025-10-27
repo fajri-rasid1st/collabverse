@@ -10,11 +10,13 @@ class CompleteProfileController extends ChangeNotifier {
 
   /// Submit
   Future<void> submit() async {
-    // Validate and save the form values
-    formKey.currentState?.saveAndValidate(
-      autoScrollWhenFocusOnInvalid: true,
-    );
+    debugPrint(formKey.currentState!.instantValue.toString());
 
-    debugPrint(formKey.currentState?.value.toString());
+    // Validate and save the form values
+    // if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+    //   debugPrint(formKey.currentState!.value.toString());
+
+    //   // navigatorKey.currentState!.pushNamed(Routes.completeProfile);
+    // }
   }
 }

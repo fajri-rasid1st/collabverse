@@ -57,7 +57,6 @@ class LoginPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 8, 20, 20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RichText(
                       textAlign: TextAlign.center,
@@ -104,7 +103,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Consumer<LoginController>(
                       builder: (context, controller, child) {
                         final obsecured = controller.obsecurePassword;

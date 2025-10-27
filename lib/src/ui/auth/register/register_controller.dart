@@ -44,12 +44,10 @@ class RegisterController extends ChangeNotifier {
   /// Register
   Future<void> register() async {
     // Validate and save the form values
-    formKey.currentState?.saveAndValidate(
-      autoScrollWhenFocusOnInvalid: true,
-    );
+    if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+      debugPrint(formKey.currentState!.value.toString());
 
-    debugPrint(formKey.currentState?.value.toString());
-
-    navigatorKey.currentState!.pop();
+      navigatorKey.currentState!.pop();
+    }
   }
 }

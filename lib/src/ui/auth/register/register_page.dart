@@ -15,6 +15,7 @@ import 'package:collabverse/core/utils/utils.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/form_fields/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
+import 'package:collabverse/src/shared/widgets/svg_asset.dart';
 import 'package:collabverse/src/ui/auth/register/register_controller.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -51,12 +52,23 @@ class RegisterPage extends StatelessWidget {
                       width: 100,
                     ),
                   ),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: SafeArea(
+                      child: IconButton(
+                        onPressed: () => navigatorKey.currentState!.pop(),
+                        icon: SvgAsset(
+                          AssetPath.getIcon('ph_arrow_left_bold.svg'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 8, 20, 20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RichText(
                       textAlign: TextAlign.center,
@@ -106,7 +118,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     CvTextField(
                       name: 'email',
                       label: 'Email',
@@ -123,14 +135,13 @@ class RegisterPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 3,
                           child: CvTextField(
-                            name: '',
+                            name: '-',
                             label: 'Nomor HP',
                             showMaskRequiredLabel: true,
                             initialValue: '${Utils.convertCountryCodeToEmoji('ID')}\t+62',
@@ -161,7 +172,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Consumer<RegisterController>(
                       builder: (context, controller, child) {
                         final obsecured = controller.obsecurePassword;
@@ -189,7 +200,7 @@ class RegisterPage extends StatelessWidget {
                         );
                       },
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Consumer<RegisterController>(
                       builder: (context, controller, child) {
                         final obsecured = controller.obsecureConfirmPassword;
