@@ -13,11 +13,13 @@ import 'package:collabverse/core/extensions/text_style_extension.dart';
 import 'package:collabverse/core/routes/route_names.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
+import 'package:collabverse/src/data/domain_role_data.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
-import 'package:collabverse/src/shared/widgets/form_fields/cv_radio_button_user_type_field.dart';
-import 'package:collabverse/src/shared/widgets/form_fields/cv_text_field.dart';
+import 'package:collabverse/src/shared/widgets/cv/cv_radio_button_user_type_field.dart';
+import 'package:collabverse/src/shared/widgets/cv/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
-import 'package:collabverse/src/ui/auth/complete_profile.dart/complete_profile_controller.dart';
+import 'package:collabverse/src/shared/widgets/svg_asset.dart';
+import 'package:collabverse/src/ui/auth/complete_profile/complete_profile_controller.dart';
 
 class CompleteProfilePage extends StatelessWidget {
   const CompleteProfilePage({super.key});
@@ -56,7 +58,7 @@ class CompleteProfilePage extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 8, 20, 20),
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 20),
                 child: Column(
                   children: [
                     RichText(
@@ -103,12 +105,19 @@ class CompleteProfilePage extends StatelessWidget {
                       hintText: 'Pilih bidang kreatif/minat',
                       readOnly: true,
                       suffixIconName: 'ph_caret_down.svg',
-                      onTap: () => navigatorKey.currentState!.pushNamed(
-                        Routes.singleSelectionValue,
-                        arguments: {
-                          'appBarTitle': 'Pilih Bidang Kreatif/Minat',
-                        },
-                      ),
+                      onTap: () async {
+                        final selectedDomain = await navigatorKey.currentState!.pushNamed(
+                          Routes.singleSelectionValue,
+                          arguments: {
+                            'appBarTitle': 'Pilih Bidang Kreatif/Minat',
+                            'values': DomainRoleData.domains,
+                          },
+                        );
+
+                        if (selectedDomain != null) {
+                          controller.formKey.currentState!.fields['domain']!.didChange(selectedDomain);
+                        }
+                      },
                       validators: [
                         FormBuilderValidators.required(
                           errorText: 'Bidang kreatif wajib diisi',
@@ -209,9 +218,12 @@ class CompleteProfilePage extends StatelessWidget {
                       style: TextTheme.of(context).labelSmall!.bold.colorError(context),
                     ),
                     SizedBox(height: 20),
-                    FilledButton(
+                    FilledButton.icon(
                       onPressed: () => controller.submit(),
-                      child: Text('Daftar'),
+                      label: Text('Mulai Explore!'),
+                      icon: SvgAsset(
+                        AssetPath.getIcon('ph_paper_plane_tilt.svg'),
+                      ),
                     ).expand(),
                   ],
                 ),

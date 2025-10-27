@@ -13,7 +13,7 @@ import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/core/utils/utils.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
-import 'package:collabverse/src/shared/widgets/form_fields/cv_text_field.dart';
+import 'package:collabverse/src/shared/widgets/cv/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
 import 'package:collabverse/src/shared/widgets/svg_asset.dart';
 import 'package:collabverse/src/ui/auth/register/register_controller.dart';
@@ -53,8 +53,8 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 8,
-                    left: 8,
+                    top: 4,
+                    left: 4,
                     child: SafeArea(
                       child: IconButton(
                         onPressed: () => navigatorKey.currentState!.pop(),
@@ -67,7 +67,7 @@ class RegisterPage extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 8, 20, 20),
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 20),
                 child: Column(
                   children: [
                     RichText(

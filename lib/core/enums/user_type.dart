@@ -1,4 +1,4 @@
-/// User type.
+/// User type
 enum UserType {
   creator(
     value: 'creator',

@@ -1,0 +1,4 @@
+enum DataSourceMode {
+  local,
+  remote,
+}

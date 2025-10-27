@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:collabverse/core/extensions/text_style_extension.dart';
-import 'package:collabverse/core/themes/base/color_scheme.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/src/shared/widgets/svg_asset.dart';
@@ -22,7 +21,10 @@ class CvAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.automaticallyImplyLeading = true,
     this.leading,
     this.actions,
-  });
+  }) : assert(
+         !automaticallyImplyLeading || leading == null,
+         'Cannot provide a leading widget when automaticallyImplyLeading is true.',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +52,12 @@ class CvAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Divider(
           height: 1,
           thickness: 1,
-          color: Palette.disabled,
+          color: Theme.of(context).disabledColor,
         ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(64);
+  Size get preferredSize => Size.fromHeight(66);
 }
