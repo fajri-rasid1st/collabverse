@@ -108,6 +108,9 @@ class _RadioOptionField extends StatelessWidget {
               ? TextTheme.of(context).labelSmall!.colorSecondary(context)
               : TextTheme.of(context).labelSmall!.colorOutline(context),
         ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
         visualDensity: VisualDensity(
           vertical: 0,
           horizontal: -4,

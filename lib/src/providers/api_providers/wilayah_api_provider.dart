@@ -33,9 +33,9 @@ class WilayahApiProvider extends ChangeNotifier {
 
       _data = result;
 
-      _state = ResultState.data;
+      _state = ResultState.success;
     } catch (e) {
-      _message = 'Gagal memuat daftar provinsi';
+      _message = 'Daftar provinsi gagal dimuat. Mohon coba lagi nanti.';
 
       _state = ResultState.error;
     } finally {
@@ -52,7 +52,7 @@ class WilayahApiProvider extends ChangeNotifier {
 
       _data = result;
 
-      _state = ResultState.data;
+      _state = ResultState.success;
     } catch (e) {
       _message = 'Gagal memuat daftar kota/kabupaten';
 

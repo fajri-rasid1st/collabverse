@@ -1,6 +1,10 @@
 /// Represents the state of a result from server.
 enum ResultState {
   loading,
-  data,
-  error,
+  success,
+  error;
+
+  bool get isLoading => this == ResultState.loading;
+  bool get isSuccess => this == ResultState.success;
+  bool get isError => this == ResultState.error;
 }

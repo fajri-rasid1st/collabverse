@@ -10,37 +10,30 @@ import 'package:collabverse/src/shared/widgets/cv/cv_app_bar.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
 import 'package:collabverse/src/shared/widgets/svg_asset.dart';
 
-class SingleSelectionValuePage extends StatefulWidget {
+class MultipleSelectionValuesPage extends StatefulWidget {
   final String appBarTitle;
   final List<String> values;
-  final String? initialValue;
+  final List<String>? initialValues;
 
-  const SingleSelectionValuePage({
+  const MultipleSelectionValuesPage({
     super.key,
     required this.appBarTitle,
     required this.values,
-    this.initialValue,
+    this.initialValues,
   });
 
   @override
-  State<SingleSelectionValuePage> createState() => _SingleSelectionValuePageState();
+  State<MultipleSelectionValuesPage> createState() => _MultipleSelectionValuesPageState();
 }
 
-class _SingleSelectionValuePageState extends State<SingleSelectionValuePage> {
-  late final ValueNotifier<String?> currentValue;
+class _MultipleSelectionValuesPageState extends State<MultipleSelectionValuesPage> {
+  late final List<String> currentValue;
 
   @override
   void initState() {
     super.initState();
 
-    currentValue = ValueNotifier<String?>(widget.initialValue);
-  }
-
-  @override
-  void dispose() {
-    currentValue.dispose();
-
-    super.dispose();
+    currentValue = widget.initialValues ?? [];
   }
 
   @override
@@ -48,6 +41,21 @@ class _SingleSelectionValuePageState extends State<SingleSelectionValuePage> {
     return ScaffoldSafeArea(
       appBar: CvAppBar(
         title: widget.appBarTitle,
+        actions: [
+          IconButton(
+            onPressed: () => setState(() {
+              if (currentValue.length == widget.values.length) {
+                currentValue.clear();
+              } else {
+                currentValue.clear();
+                currentValue.addAll(widget.values);
+              }
+            }),
+            icon: SvgAsset(
+              AssetPath.getIcon('ph_checks_bold.svg'),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -56,16 +64,17 @@ class _SingleSelectionValuePageState extends State<SingleSelectionValuePage> {
               itemBuilder: (context, index) {
                 final value = widget.values[index];
 
-                return ValueListenableBuilder(
-                  valueListenable: currentValue,
-                  builder: (context, currentValue, child) {
-                    return _CustomListTile(
-                      selected: currentValue == value,
-                      label: value,
-                      value: value,
-                      onTap: () => this.currentValue.value = value,
-                    );
-                  },
+                return _CustomCheckBoxListTile(
+                  selected: currentValue.contains(value),
+                  label: value,
+                  value: value,
+                  onTap: () => setState(() {
+                    if (currentValue.contains(value)) {
+                      currentValue.remove(value);
+                    } else {
+                      currentValue.add(value);
+                    }
+                  }),
                 );
               },
               itemCount: widget.values.length,
@@ -74,15 +83,10 @@ class _SingleSelectionValuePageState extends State<SingleSelectionValuePage> {
           Container(
             padding: EdgeInsets.all(16),
             color: ColorScheme.of(context).primaryContainer,
-            child: ValueListenableBuilder(
-              valueListenable: currentValue,
-              builder: (context, currentValue, child) {
-                return FilledButton(
-                  onPressed: currentValue != null ? () => navigatorKey.currentState!.pop(currentValue) : null,
-                  child: Text('Lanjutkan'),
-                ).expand();
-              },
-            ),
+            child: FilledButton(
+              onPressed: currentValue.isNotEmpty ? () => navigatorKey.currentState!.pop(currentValue) : null,
+              child: Text('Lanjutkan'),
+            ).expand(),
           ),
         ],
       ),
@@ -90,13 +94,13 @@ class _SingleSelectionValuePageState extends State<SingleSelectionValuePage> {
   }
 }
 
-class _CustomListTile extends StatelessWidget {
+class _CustomCheckBoxListTile extends StatelessWidget {
   final bool selected;
   final String label;
   final String value;
   final VoidCallback onTap;
 
-  const _CustomListTile({
+  const _CustomCheckBoxListTile({
     required this.selected,
     required this.label,
     required this.value,
@@ -108,7 +112,10 @@ class _CustomListTile extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
@@ -125,12 +132,22 @@ class _CustomListTile extends StatelessWidget {
                   style: TextTheme.of(context).bodyMedium!.bold,
                 ),
               ),
-              if (selected) ...[
-                SizedBox(width: 8),
-                SvgAsset(
-                  AssetPath.getIcon('ph_check_bold.svg'),
+              SizedBox(width: 8),
+              Checkbox(
+                value: selected,
+                onChanged: (_) {},
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
                 ),
-              ],
+                side: BorderSide(
+                  color: selected ? ColorScheme.of(context).primary : ColorScheme.of(context).outlineVariant,
+                  width: 1.5,
+                ),
+                visualDensity: VisualDensity(
+                  vertical: -4,
+                  horizontal: -4,
+                ),
+              ),
             ],
           ),
         ),
@@ -138,7 +155,7 @@ class _CustomListTile extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: !selected ? onTap : null,
+              onTap: onTap,
             ),
           ),
         ),

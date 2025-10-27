@@ -28,6 +28,7 @@ class Utils {
       ..showSnackBar(snackBar);
   }
 
+  /// Mengonversi kode negara menjadi emoji bendera
   static String convertCountryCodeToEmoji(String countryCode) {
     final base = 0x1F1E6;
     final firstChar = countryCode.codeUnitAt(0) - 'A'.codeUnitAt(0) + base;

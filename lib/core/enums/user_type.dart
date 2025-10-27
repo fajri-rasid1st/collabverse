@@ -9,6 +9,9 @@ enum UserType {
     display: 'Organizer',
   );
 
+  bool get isCreator => this == UserType.creator;
+  bool get isOrganizer => this == UserType.organizer;
+
   final String value;
   final String display;
 
@@ -16,9 +19,6 @@ enum UserType {
     required this.value,
     required this.display,
   });
-
-  bool get isCreator => this == UserType.creator;
-  bool get isOrganizer => this == UserType.organizer;
 
   static UserType fromValue(String value) {
     return UserType.values.firstWhere(

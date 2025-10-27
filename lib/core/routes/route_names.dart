@@ -6,4 +6,5 @@ class Routes {
   static const completeProfile = '/complete-profile';
   static const singleSelectionValue = '/single-selection-value';
   static const multipleSelectionValues = '/multiple-selection-values';
+  static const wilayahSelectionValue = '/wilayah-selection-value';
 }

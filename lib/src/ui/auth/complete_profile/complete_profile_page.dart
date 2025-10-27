@@ -8,12 +8,14 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:collabverse/core/enums/user_type.dart';
+import 'package:collabverse/core/enums/wilayah_type.dart';
 import 'package:collabverse/core/extensions/button_extension.dart';
 import 'package:collabverse/core/extensions/text_style_extension.dart';
 import 'package:collabverse/core/routes/route_names.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/src/data/domain_role_data.dart';
+import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_radio_button_user_type_field.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_text_field.dart';
@@ -103,19 +105,22 @@ class CompleteProfilePage extends StatelessWidget {
                       label: 'Bidang Kreatif',
                       showMaskRequiredLabel: true,
                       hintText: 'Pilih bidang kreatif/minat',
-                      readOnly: true,
                       suffixIconName: 'ph_caret_down.svg',
+                      readOnly: true,
                       onTap: () async {
+                        final domainField = controller.formKey.currentState?.fields['domain'];
+
                         final selectedDomain = await navigatorKey.currentState!.pushNamed(
                           Routes.singleSelectionValue,
                           arguments: {
                             'appBarTitle': 'Pilih Bidang Kreatif/Minat',
                             'values': DomainRoleData.domains,
+                            'initialValue': domainField?.value,
                           },
                         );
 
-                        if (selectedDomain != null) {
-                          controller.formKey.currentState!.fields['domain']!.didChange(selectedDomain);
+                        if (selectedDomain != null && selectedDomain is String) {
+                          controller.fieldValueChanged(domainField, selectedDomain);
                         }
                       },
                       validators: [
@@ -125,19 +130,40 @@ class CompleteProfilePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 12),
-                    CvTextField(
-                      name: 'roles',
-                      label: 'Peran',
-                      showMaskRequiredLabel: true,
-                      hintText: 'Pilih peran yang sesuai minat',
-                      readOnly: true,
-                      suffixIconName: 'ph_caret_down.svg',
-                      // onTap: () => , // TODO:
-                      validators: [
-                        FormBuilderValidators.required(
-                          errorText: 'Peran wajib diisi',
-                        ),
-                      ],
+                    Consumer<CompleteProfileController>(
+                      builder: (context, controller, child) {
+                        final domainField = controller.formKey.currentState?.fields['domain'];
+                        final rolesField = controller.formKey.currentState?.fields['roles'];
+
+                        return CvTextField(
+                          name: 'roles',
+                          label: 'Peran',
+                          showMaskRequiredLabel: true,
+                          hintText: 'Pilih peran yang sesuai minat',
+                          suffixIconName: 'ph_caret_down.svg',
+                          readOnly: true,
+                          enabled: domainField?.value != null,
+                          onTap: () async {
+                            final selectedRoles = await navigatorKey.currentState!.pushNamed(
+                              Routes.multipleSelectionValues,
+                              arguments: {
+                                'appBarTitle': 'Pilih Peran Sesuai Minat',
+                                'values': DomainRoleData.getRolesByDomain(domainField?.value),
+                                'initialValues': (rolesField?.value as String?)?.split(', '),
+                              },
+                            );
+
+                            if (selectedRoles != null && selectedRoles is List<String>) {
+                              controller.fieldValueChanged(rolesField, selectedRoles.join(', '));
+                            }
+                          },
+                          validators: [
+                            FormBuilderValidators.required(
+                              errorText: 'Peran wajib diisi',
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     SizedBox(height: 24),
                     Align(
@@ -153,9 +179,24 @@ class CompleteProfilePage extends StatelessWidget {
                       label: 'Provinsi',
                       showMaskRequiredLabel: true,
                       hintText: 'Pilih Provinsi',
-                      readOnly: true,
                       suffixIconName: 'ph_caret_down.svg',
-                      // onTap: () => , // TODO:
+                      readOnly: true,
+                      onTap: () async {
+                        final provinceField = controller.formKey.currentState?.fields['province'];
+
+                        final selectedProvince = await navigatorKey.currentState!.pushNamed(
+                          Routes.wilayahSelectionValue,
+                          arguments: {
+                            'type': WilayahType.province,
+                            'initialValue': controller.selectedProvince,
+                          },
+                        );
+
+                        if (selectedProvince != null && selectedProvince is WilayahModel) {
+                          controller.selectedProvince = selectedProvince;
+                          controller.fieldValueChanged(provinceField, selectedProvince.name);
+                        }
+                      },
                       validators: [
                         FormBuilderValidators.required(
                           errorText: 'Provinsi wajib diisi',
@@ -163,19 +204,40 @@ class CompleteProfilePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 12),
-                    CvTextField(
-                      name: 'city',
-                      label: 'Kota/Kabupaten',
-                      showMaskRequiredLabel: true,
-                      hintText: 'Pilih Kota/Kabupaten',
-                      readOnly: true,
-                      suffixIconName: 'ph_caret_down.svg',
-                      // onTap: () => , // TODO:
-                      validators: [
-                        FormBuilderValidators.required(
-                          errorText: 'Kota/kabupaten wajib diisi',
-                        ),
-                      ],
+                    Consumer<CompleteProfileController>(
+                      builder: (context, controller, child) {
+                        return CvTextField(
+                          name: 'city',
+                          label: 'Kota/Kabupaten',
+                          showMaskRequiredLabel: true,
+                          hintText: 'Pilih Kota/Kabupaten',
+                          suffixIconName: 'ph_caret_down.svg',
+                          readOnly: true,
+                          enabled: controller.selectedProvince != null,
+                          onTap: () async {
+                            final cityField = controller.formKey.currentState?.fields['city'];
+
+                            final selectedCity = await navigatorKey.currentState!.pushNamed(
+                              Routes.wilayahSelectionValue,
+                              arguments: {
+                                'type': WilayahType.city,
+                                'initialValue': controller.selectedCity,
+                                'province': controller.selectedProvince,
+                              },
+                            );
+
+                            if (selectedCity != null && selectedCity is WilayahModel) {
+                              controller.selectedCity = selectedCity;
+                              controller.fieldValueChanged(cityField, selectedCity.name);
+                            }
+                          },
+                          validators: [
+                            FormBuilderValidators.required(
+                              errorText: 'Kota/kabupaten wajib diisi',
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     SizedBox(height: 24),
                     Align(

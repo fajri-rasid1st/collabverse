@@ -47,6 +47,7 @@ class CvAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : null),
       actions: actions,
+      actionsPadding: EdgeInsets.only(right: 8),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1),
         child: Divider(
