@@ -28,7 +28,8 @@ class CvTextField extends StatelessWidget {
   final String? suffixIconName;
   final String? suffixText;
   final TextStyle? textStyle;
-  final List<String? Function(String?)>? validators;
+  final List<String? Function(String? validator)>? validators;
+  final dynamic Function(String? value)? valueTransformer;
   final VoidCallback? onTap;
   final VoidCallback? onSuffixIconTap;
   final ValueChanged<String?>? onChanged;
@@ -53,6 +54,7 @@ class CvTextField extends StatelessWidget {
     this.suffixText,
     this.textStyle,
     this.validators,
+    this.valueTransformer,
     this.onTap,
     this.onSuffixIconTap,
     this.onChanged,
@@ -129,6 +131,7 @@ class CvTextField extends StatelessWidget {
             suffixStyle: TextTheme.of(context).bodyMedium!.bold.colorOnSurface(context),
           ),
           validator: validators != null ? FormBuilderValidators.compose(validators!) : null,
+          valueTransformer: valueTransformer,
           onTap: onTap,
           onChanged: onChanged,
         ),

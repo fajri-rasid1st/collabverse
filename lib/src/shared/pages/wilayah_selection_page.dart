@@ -82,7 +82,7 @@ class _WilayahSelectionPageState extends State<WilayahSelectionPage> {
               builder: (context, provider, child) {
                 switch (provider.state) {
                   case ResultState.loading:
-                    return LoadingIndicator(radius: 24);
+                    return LoadingIndicator(radius: 32);
                   case ResultState.error:
                     return CustomInformation(
                       assetName: AssetPath.getVector('404_error_lost_in_space_cuate.svg'),

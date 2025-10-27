@@ -162,6 +162,7 @@ class CompleteProfilePage extends StatelessWidget {
                               errorText: 'Peran wajib diisi',
                             ),
                           ],
+                          valueTransformer: (value) => value?.split(', '),
                         );
                       },
                     ),
@@ -194,6 +195,7 @@ class CompleteProfilePage extends StatelessWidget {
 
                         if (selectedProvince != null && selectedProvince is WilayahModel) {
                           controller.selectedProvince = selectedProvince;
+                          controller.selectedCity = null;
                           controller.fieldValueChanged(provinceField, selectedProvince.name);
                         }
                       },
@@ -206,6 +208,8 @@ class CompleteProfilePage extends StatelessWidget {
                     SizedBox(height: 12),
                     Consumer<CompleteProfileController>(
                       builder: (context, controller, child) {
+                        final cityField = controller.formKey.currentState?.fields['city'];
+
                         return CvTextField(
                           name: 'city',
                           label: 'Kota/Kabupaten',
@@ -215,8 +219,6 @@ class CompleteProfilePage extends StatelessWidget {
                           readOnly: true,
                           enabled: controller.selectedProvince != null,
                           onTap: () async {
-                            final cityField = controller.formKey.currentState?.fields['city'];
-
                             final selectedCity = await navigatorKey.currentState!.pushNamed(
                               Routes.wilayahSelectionValue,
                               arguments: {

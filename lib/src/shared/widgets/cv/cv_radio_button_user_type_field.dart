@@ -46,6 +46,7 @@ class CvRadioButtonUserTypeField extends StatelessWidget {
         FormBuilderField<UserType?>(
           name: name,
           initialValue: initialValue,
+          valueTransformer: (userType) => userType?.value,
           builder: (field) {
             return Column(
               spacing: 8,
