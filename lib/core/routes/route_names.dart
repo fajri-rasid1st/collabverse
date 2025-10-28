@@ -8,4 +8,5 @@ class Routes {
   static const multipleSelectionValues = '/multiple-selection-values';
   static const wilayahSelectionValue = '/wilayah-selection-value';
   static const eventBoardDetail = '/event-board-detail';
+  static const eventBoardForm = '/event-board-form';
 }

@@ -1,10 +1,27 @@
 // Flutter imports:
+import 'package:collabverse/core/utils/navigator_key.dart';
+import 'package:collabverse/src/shared/widgets/loading_indicator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:collabverse/core/extensions/text_style_extension.dart';
 
 class Utils {
+  /// Menampilkan dialog loading
+  static void showLoadingDialog() {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: kDebugMode,
+      builder: (_) => LoadingIndicator(radius: 24),
+    );
+  }
+
+  /// Menutup dialog loading
+  static void hideLoadingDialog() {
+    navigatorKey.currentState!.pop();
+  }
+
   /// Menampilkan snackbar dengan [message] dan opsional [action]
   static void showSnackBarMessage({
     required BuildContext context,
