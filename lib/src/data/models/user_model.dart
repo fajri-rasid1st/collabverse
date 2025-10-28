@@ -1,5 +1,5 @@
 class UserModel {
-  final String uid;
+  final String? uid;
   final String userType;
   final String fullName;
   final String email;
@@ -15,7 +15,7 @@ class UserModel {
   final double? long;
 
   const UserModel({
-    required this.uid,
+    this.uid,
     required this.userType,
     required this.fullName,
     required this.email,
@@ -33,7 +33,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      uid: map['uid'] ?? '',
+      uid: map['uid'],
       userType: map['userType'] ?? '',
       fullName: map['fullName'] ?? '',
       email: map['email'] ?? '',
@@ -45,8 +45,8 @@ class UserModel {
       bio: map['bio'],
       domain: map['domain'] ?? '',
       roles: List<String>.from(map['roles'] ?? []),
-      lat: map['lat'],
-      long: map['long'],
+      lat: (map['lat'] as num?)?.toDouble(),
+      long: (map['long'] as num?)?.toDouble(),
     );
   }
 

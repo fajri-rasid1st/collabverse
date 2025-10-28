@@ -28,12 +28,10 @@ class AppPreferences {
 
   /// Get user from persistent storage
   Future<UserModel?> getUser() async {
+    if (!await prefs.containsKey(kUserKey)) return null;
+
     final userJson = await prefs.getString(kUserKey);
 
-    if (userJson != null) {
-      return UserModel.fromMap(jsonDecode(userJson));
-    }
-
-    return null;
+    return UserModel.fromMap(jsonDecode(userJson!));
   }
 }

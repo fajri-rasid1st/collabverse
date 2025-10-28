@@ -30,11 +30,9 @@ class FirebaseUserService {
     try {
       final doc = await firebaseFirestore.collection('users').doc(uid).get();
 
-      if (doc.exists) {
-        return UserModel.fromMap(doc.data()!);
-      }
+      if (!doc.exists) return null;
 
-      return null;
+      return UserModel.fromMap(doc.data()!);
     } catch (e) {
       rethrow;
     }
