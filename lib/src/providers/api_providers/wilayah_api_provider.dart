@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 // Project imports:
 import 'package:collabverse/core/enums/result_state.dart';
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
+import 'package:collabverse/src/data/models/wilayah_model.dart';
 import 'package:collabverse/src/services/api/wilayah_api_service.dart';
 
 class WilayahApiProvider extends ChangeNotifier {

@@ -11,7 +11,7 @@ import 'package:collabverse/core/extensions/button_extension.dart';
 import 'package:collabverse/core/extensions/text_style_extension.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
+import 'package:collabverse/src/data/models/wilayah_model.dart';
 import 'package:collabverse/src/providers/api_providers/wilayah_api_provider.dart';
 import 'package:collabverse/src/shared/widgets/custom_information.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_app_bar.dart';
@@ -82,7 +82,7 @@ class _WilayahSelectionPageState extends State<WilayahSelectionPage> {
               builder: (context, provider, child) {
                 switch (provider.state) {
                   case ResultState.loading:
-                    return LoadingIndicator(radius: 32);
+                    return LoadingIndicator(radius: 28);
                   case ResultState.error:
                     return CustomInformation(
                       assetName: AssetPath.getVector('404_error_lost_in_space_cuate.svg'),

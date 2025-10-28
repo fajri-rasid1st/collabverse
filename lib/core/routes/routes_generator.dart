@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:collabverse/core/enums/wilayah_type.dart';
 import 'package:collabverse/core/routes/route_names.dart';
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
 import 'package:collabverse/src/providers/api_providers/wilayah_api_provider.dart';
 import 'package:collabverse/src/services/api/wilayah_api_service.dart';
 import 'package:collabverse/src/shared/pages/multiple_selection_values_page.dart';
@@ -54,9 +52,9 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
 
       return MaterialPageRoute(
         builder: (_) => SingleSelectionValuePage(
-          appBarTitle: args['appBarTitle'] as String,
-          values: args['values'] as List<String>,
-          initialValue: args['initialValue'] as String?,
+          appBarTitle: args['appBarTitle'],
+          values: args['values'],
+          initialValue: args['initialValue'],
         ),
       );
     case Routes.multipleSelectionValues:
@@ -64,9 +62,9 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
 
       return MaterialPageRoute(
         builder: (_) => MultipleSelectionValuesPage(
-          appBarTitle: args['appBarTitle'] as String,
-          values: args['values'] as List<String>,
-          initialValues: args['initialValues'] as List<String>?,
+          appBarTitle: args['appBarTitle'],
+          values: args['values'],
+          initialValues: args['initialValues'],
         ),
       );
     case Routes.wilayahSelectionValue:
@@ -78,9 +76,9 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
             apiService: context.read<WilayahApiService>(),
           ),
           child: WilayahSelectionPage(
-            type: args['type'] as WilayahType,
-            initialValue: args['initialValue'] as WilayahModel?,
-            province: args['province'] as WilayahModel?,
+            type: args['type'],
+            initialValue: args['initialValue'],
+            province: args['province'],
           ),
         ),
       );

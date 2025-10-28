@@ -15,7 +15,6 @@ import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_text_field.dart';
 import 'package:collabverse/src/shared/widgets/scaffold_safe_area.dart';
-import 'package:collabverse/src/shared/widgets/svg_asset.dart';
 import 'package:collabverse/src/ui/auth/login/login_controller.dart';
 
 class LoginPage extends StatelessWidget {
@@ -130,33 +129,6 @@ class LoginPage extends StatelessWidget {
                     FilledButton(
                       onPressed: () => controller.login(),
                       child: Text('Masuk'),
-                    ).expand(),
-                    SizedBox(height: 24),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                      child: Row(
-                        spacing: 8,
-                        children: [
-                          Expanded(
-                            child: Divider(),
-                          ),
-                          Text(
-                            'atau',
-                            style: TextTheme.of(context).bodySmall!.colorOutline(context),
-                          ),
-                          Expanded(
-                            child: Divider(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24),
-                    OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: SvgAsset(
-                        AssetPath.getIcon('ph_google.svg'),
-                      ),
-                      label: Text('Lanjutkan dengan Google'),
                     ).expand(),
                     SizedBox(height: 24),
                     Row(

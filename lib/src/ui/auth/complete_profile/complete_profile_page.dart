@@ -15,7 +15,7 @@ import 'package:collabverse/core/routes/route_names.dart';
 import 'package:collabverse/core/utils/asset_path.dart';
 import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:collabverse/src/data/domain_role_data.dart';
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
+import 'package:collabverse/src/data/models/wilayah_model.dart';
 import 'package:collabverse/src/shared/clippers/auth_page_clipper.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_radio_button_user_type_field.dart';
 import 'package:collabverse/src/shared/widgets/cv/cv_text_field.dart';
@@ -110,7 +110,7 @@ class CompleteProfilePage extends StatelessWidget {
                       onTap: () async {
                         final domainField = controller.formKey.currentState?.fields['domain'];
 
-                        final selectedDomain = await navigatorKey.currentState!.pushNamed(
+                        final domain = await navigatorKey.currentState!.pushNamed(
                           Routes.singleSelectionValue,
                           arguments: {
                             'appBarTitle': 'Pilih Bidang Kreatif/Minat',
@@ -119,8 +119,8 @@ class CompleteProfilePage extends StatelessWidget {
                           },
                         );
 
-                        if (selectedDomain != null && selectedDomain is String) {
-                          controller.fieldValueChanged(domainField, selectedDomain);
+                        if (domain != null && domain is String) {
+                          controller.fieldValueChanged(domainField, domain);
                         }
                       },
                       validators: [
@@ -144,7 +144,7 @@ class CompleteProfilePage extends StatelessWidget {
                           readOnly: true,
                           enabled: domainField?.value != null,
                           onTap: () async {
-                            final selectedRoles = await navigatorKey.currentState!.pushNamed(
+                            final roles = await navigatorKey.currentState!.pushNamed(
                               Routes.multipleSelectionValues,
                               arguments: {
                                 'appBarTitle': 'Pilih Peran Sesuai Minat',
@@ -153,8 +153,8 @@ class CompleteProfilePage extends StatelessWidget {
                               },
                             );
 
-                            if (selectedRoles != null && selectedRoles is List<String>) {
-                              controller.fieldValueChanged(rolesField, selectedRoles.join(', '));
+                            if (roles != null && roles is List<String>) {
+                              controller.fieldValueChanged(rolesField, roles.join(', '));
                             }
                           },
                           validators: [
@@ -184,8 +184,9 @@ class CompleteProfilePage extends StatelessWidget {
                       readOnly: true,
                       onTap: () async {
                         final provinceField = controller.formKey.currentState?.fields['province'];
+                        final cityField = controller.formKey.currentState?.fields['city'];
 
-                        final selectedProvince = await navigatorKey.currentState!.pushNamed(
+                        final province = await navigatorKey.currentState!.pushNamed(
                           Routes.wilayahSelectionValue,
                           arguments: {
                             'type': WilayahType.province,
@@ -193,10 +194,14 @@ class CompleteProfilePage extends StatelessWidget {
                           },
                         );
 
-                        if (selectedProvince != null && selectedProvince is WilayahModel) {
-                          controller.selectedProvince = selectedProvince;
-                          controller.selectedCity = null;
-                          controller.fieldValueChanged(provinceField, selectedProvince.name);
+                        if (province != null && province is WilayahModel) {
+                          if (province.code != controller.selectedProvince?.code) {
+                            controller.selectedCity = null;
+                            controller.fieldValueChanged(cityField, null);
+                          }
+
+                          controller.selectedProvince = province;
+                          controller.fieldValueChanged(provinceField, province.name);
                         }
                       },
                       validators: [
@@ -219,7 +224,7 @@ class CompleteProfilePage extends StatelessWidget {
                           readOnly: true,
                           enabled: controller.selectedProvince != null,
                           onTap: () async {
-                            final selectedCity = await navigatorKey.currentState!.pushNamed(
+                            final city = await navigatorKey.currentState!.pushNamed(
                               Routes.wilayahSelectionValue,
                               arguments: {
                                 'type': WilayahType.city,
@@ -228,9 +233,9 @@ class CompleteProfilePage extends StatelessWidget {
                               },
                             );
 
-                            if (selectedCity != null && selectedCity is WilayahModel) {
-                              controller.selectedCity = selectedCity;
-                              controller.fieldValueChanged(cityField, selectedCity.name);
+                            if (city != null && city is WilayahModel) {
+                              controller.selectedCity = city;
+                              controller.fieldValueChanged(cityField, city.name);
                             }
                           },
                           validators: [

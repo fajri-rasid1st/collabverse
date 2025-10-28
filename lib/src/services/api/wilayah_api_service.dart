@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 // Project imports:
 import 'package:collabverse/core/const/const.dart';
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
+import 'package:collabverse/src/data/models/wilayah_model.dart';
 
 class WilayahApiService {
   // Singleton pattern
@@ -16,8 +16,8 @@ class WilayahApiService {
 
   factory WilayahApiService() => _instance;
 
+  // Http client
   http.Client? _client;
-
   http.Client get client => _client ??= http.Client();
 
   /// Mengambil data seluruh provinsi di Indonesia

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 // Project imports:
-import 'package:collabverse/src/data/models/wilayah/wilayah_model.dart';
+import 'package:collabverse/src/data/models/wilayah_model.dart';
 
 class CompleteProfileController extends ChangeNotifier {
   // Form key
