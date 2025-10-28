@@ -13,6 +13,12 @@ import 'package:collabverse/app.dart';
 import 'package:collabverse/core/const/const.dart';
 import 'package:collabverse/firebase_options.dart';
 import 'package:collabverse/src/services/api/wilayah_api_service.dart';
+import 'package:collabverse/src/services/firebase/firebase_auth_service.dart';
+import 'package:collabverse/src/services/firebase/firebase_event_board_service.dart';
+import 'package:collabverse/src/services/firebase/firebase_project_brief_service.dart';
+import 'package:collabverse/src/services/firebase/firebase_user_service.dart';
+import 'package:collabverse/src/services/prefs/app_preferences.dart';
+import 'package:collabverse/src/services/supabase/supabase_storage_service.dart';
 
 void main() async {
   // Ensure widget bindings are initialized
@@ -42,9 +48,30 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        //* Service providers
+        //* Service: Shared preferences
+        Provider(
+          create: (_) => AppPreferences(),
+        ),
+        //* Service: Api
         Provider(
           create: (_) => WilayahApiService(),
+        ),
+        //* Service: Supabase
+        Provider(
+          create: (_) => SupabaseStorageService(),
+        ),
+        //* Service: Firebase auth + firestore
+        Provider(
+          create: (_) => FirebaseAuthService(),
+        ),
+        Provider(
+          create: (_) => FirebaseUserService(),
+        ),
+        Provider(
+          create: (_) => FirebaseEventBoardService(),
+        ),
+        Provider(
+          create: (_) => FirebaseProjectBriefService(),
         ),
       ],
       child: CollabVerseApp(),

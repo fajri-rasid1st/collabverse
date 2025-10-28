@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collabverse/src/ui/event_board/event_board_detail_page.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -25,6 +26,14 @@ Route<dynamic>? generateAppRoutes(RouteSettings settings) {
     case Routes.discover:
       return MaterialPageRoute(
         builder: (context) => DiscoverPage(),
+      );
+    case Routes.eventBoardDetail:
+      final args = settings.arguments as Map<String, dynamic>;
+
+      return MaterialPageRoute(
+        builder: (context) => EventBoardDetailPage(
+          event: args['event'],
+        ),
       );
     case Routes.login:
       return MaterialPageRoute(

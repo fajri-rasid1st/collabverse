@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:collabverse/core/routes/route_names.dart';
+import 'package:collabverse/core/utils/navigator_key.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -46,7 +48,7 @@ class CompleteProfileController extends ChangeNotifier {
     if (formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
       debugPrint(formKey.currentState!.value.toString());
 
-      // navigatorKey.currentState!.pushNamed(Routes.completeProfile);
+      navigatorKey.currentState!.pushNamed(Routes.discover);
     }
   }
 }
