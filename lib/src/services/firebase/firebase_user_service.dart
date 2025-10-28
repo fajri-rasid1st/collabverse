@@ -7,9 +7,7 @@ import 'package:collabverse/src/data/models/user_model.dart';
 class FirebaseUserService {
   // Singleton pattern
   static final FirebaseUserService _instance = FirebaseUserService._internal();
-
   FirebaseUserService._internal();
-
   factory FirebaseUserService() => _instance;
 
   // Firebase firestore

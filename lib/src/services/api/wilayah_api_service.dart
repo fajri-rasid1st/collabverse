@@ -11,9 +11,7 @@ import 'package:collabverse/src/data/models/wilayah_model.dart';
 class WilayahApiService {
   // Singleton pattern
   static final WilayahApiService _instance = WilayahApiService._internal();
-
   WilayahApiService._internal();
-
   factory WilayahApiService() => _instance;
 
   // Http client

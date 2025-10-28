@@ -7,14 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Project imports:
 import 'package:collabverse/src/data/models/user_model.dart';
 
-const kUserKey = 'user';
-
 class AppPreferences {
   // Singleton pattern
   static final AppPreferences _instance = AppPreferences._internal();
-
   AppPreferences._internal();
-
   factory AppPreferences() => _instance;
 
   // Shared preferences async
@@ -23,14 +19,14 @@ class AppPreferences {
 
   /// Set user to persistent storage
   Future<void> setUser(UserModel user) async {
-    return await prefs.setString(kUserKey, jsonEncode(user.toMap()));
+    return await prefs.setString('user', jsonEncode(user.toMap()));
   }
 
   /// Get user from persistent storage
   Future<UserModel?> getUser() async {
-    if (!await prefs.containsKey(kUserKey)) return null;
+    if (!await prefs.containsKey('user')) return null;
 
-    final userJson = await prefs.getString(kUserKey);
+    final userJson = await prefs.getString('user');
 
     return UserModel.fromMap(jsonDecode(userJson!));
   }

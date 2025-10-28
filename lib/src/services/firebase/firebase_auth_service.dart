@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseAuthService {
   // Singleton pattern
   static final FirebaseAuthService _instance = FirebaseAuthService._internal();
-
   FirebaseAuthService._internal();
-
   factory FirebaseAuthService() => _instance;
 
   // Firebase auth

@@ -13,4 +13,14 @@ class WilayahModel {
       name: map['name'] as String? ?? '',
     );
   }
+
+  WilayahModel copyWith({
+    String? code,
+    String? name,
+  }) {
+    return WilayahModel(
+      code: code ?? this.code,
+      name: name ?? this.name,
+    );
+  }
 }

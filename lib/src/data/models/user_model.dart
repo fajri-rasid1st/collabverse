@@ -68,4 +68,38 @@ class UserModel {
       'long': long,
     };
   }
+
+  UserModel copyWith({
+    String? uid,
+    String? userType,
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? instagramUsername,
+    String? profilePictureUrl,
+    String? province,
+    String? city,
+    String? bio,
+    String? domain,
+    List<String>? roles,
+    double? lat,
+    double? long,
+  }) {
+    return UserModel(
+      uid: uid ?? this.uid,
+      userType: userType ?? this.userType,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      instagramUsername: instagramUsername ?? this.instagramUsername,
+      profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+      province: province ?? this.province,
+      city: city ?? this.city,
+      bio: bio ?? this.bio,
+      domain: domain ?? this.domain,
+      roles: roles ?? this.roles,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
+    );
+  }
 }

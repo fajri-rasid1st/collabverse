@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProjectBriefModel {
@@ -73,5 +74,41 @@ class ProjectBriefModel {
       'status': status,
       'deadline': Timestamp.fromDate(deadline),
     };
+  }
+
+  ProjectBriefModel copyWith({
+    String? uid,
+    String? creatorUid,
+    String? title,
+    String? description,
+    String? imageUrl,
+    String? domain,
+    List<String>? roles,
+    int? totalNeeds,
+    String? province,
+    String? city,
+    String? locationDetail,
+    double? lat,
+    double? long,
+    String? status,
+    DateTime? deadline,
+  }) {
+    return ProjectBriefModel(
+      uid: uid ?? this.uid,
+      creatorUid: creatorUid ?? this.creatorUid,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imageUrl: imageUrl ?? this.imageUrl,
+      domain: domain ?? this.domain,
+      roles: roles ?? this.roles,
+      totalNeeds: totalNeeds ?? this.totalNeeds,
+      province: province ?? this.province,
+      city: city ?? this.city,
+      locationDetail: locationDetail ?? this.locationDetail,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
+      status: status ?? this.status,
+      deadline: deadline ?? this.deadline,
+    );
   }
 }

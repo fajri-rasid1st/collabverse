@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventBoardModel {
@@ -81,5 +82,45 @@ class EventBoardModel {
       'startDate': Timestamp.fromDate(startDate),
       'deadline': Timestamp.fromDate(deadline),
     };
+  }
+
+  EventBoardModel copyWith({
+    String? uid,
+    String? organizerUid,
+    String? name,
+    String? description,
+    String? posterUrl,
+    String? domain,
+    List<String>? roles,
+    int? totalNeeds,
+    String? province,
+    String? city,
+    String? venue,
+    String? locationDetail,
+    double? lat,
+    double? long,
+    String? status,
+    DateTime? startDate,
+    DateTime? deadline,
+  }) {
+    return EventBoardModel(
+      uid: uid ?? this.uid,
+      organizerUid: organizerUid ?? this.organizerUid,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      posterUrl: posterUrl ?? this.posterUrl,
+      domain: domain ?? this.domain,
+      roles: roles ?? this.roles,
+      totalNeeds: totalNeeds ?? this.totalNeeds,
+      province: province ?? this.province,
+      city: city ?? this.city,
+      venue: venue ?? this.venue,
+      locationDetail: locationDetail ?? this.locationDetail,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
+      status: status ?? this.status,
+      startDate: startDate ?? this.startDate,
+      deadline: deadline ?? this.deadline,
+    );
   }
 }

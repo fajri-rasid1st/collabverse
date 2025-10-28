@@ -6,9 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:collabverse/app.dart';
+import 'package:collabverse/core/const/const.dart';
 import 'package:collabverse/firebase_options.dart';
 import 'package:collabverse/src/services/api/wilayah_api_service.dart';
 
@@ -27,6 +29,12 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: Const.supabaseProjectUrl,
+    anonKey: Const.supabaseAnonPublicKey,
   );
 
   FlutterNativeSplash.remove();
